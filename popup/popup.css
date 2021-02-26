@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
+
+::selection {
+    background: #fff2a8;
+}
+
+body {
+    color: #333;
+    font-family: 'Nunito', 'Consolas', 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    min-width: 22rem;
+}
+
+h1 span {
+    border-bottom: 0.25rem solid #4a91e2;
+}
+
+.item {
+    margin: 0.1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px dashed #888;
+    font-size: 1rem;
+}

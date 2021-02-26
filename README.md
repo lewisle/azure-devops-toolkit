@@ -1,2 +1,1 @@
-# azure-devops-toolkit
-Azure DevOps Toolkit
+# Azure DevOps Toolkit
