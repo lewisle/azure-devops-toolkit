@@ -12,4 +12,10 @@ window.onload = function () {
         });
         clipboard.innerHTML = items.join('');
     });
+
+    const settings = document.getElementById('settings');
+
+    settings.onclick = function () {
+        chrome.runtime.openOptionsPage();
+    };
 };

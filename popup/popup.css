@@ -10,11 +10,33 @@ body {
 }
 
 h1 {
-    min-width: 22rem;
+    min-width: 33rem;
+    display: flex;
+    /* justify-content: space-between; */
 }
 
-h1 span {
+h1 .title {
     border-bottom: 0.25rem solid #4a91e2;
+    flex: 1;
+}
+
+h1 .settings {
+    border: 0.2rem solid #ccc;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    flex: 0;
+}
+
+h1 .settings:hover {
+    background-color: #f0f0f0;
+}
+
+h1 .settings:focus,
+h1 .settings:active {
+    border-color: #4a91e2;
 }
 
 .item {
@@ -22,4 +44,8 @@ h1 span {
     padding: 0.9rem 0;
     border-bottom: 1px dashed #888;
     font-size: 1rem;
+}
+
+.item:last-child {
+    border: 0;
 }
