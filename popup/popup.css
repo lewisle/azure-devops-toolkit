@@ -12,7 +12,6 @@ body {
 h1 {
     min-width: 33rem;
     display: flex;
-    /* justify-content: space-between; */
 }
 
 h1 .title {
@@ -20,22 +19,27 @@ h1 .title {
     flex: 1;
 }
 
-h1 .settings {
+h1 .options,
+h1 .clear {
     border: 0.2rem solid #ccc;
     border-radius: 50%;
     font-size: 1rem;
     padding: 0.5rem;
-    margin-left: 1rem;
-    cursor: pointer;
+    margin-left: 0.5rem;
+    cursor: default;
     flex: 0;
+    user-select: none;
 }
 
-h1 .settings:hover {
+h1 .options:hover,
+h1 .clear:hover {
     background-color: #f0f0f0;
 }
 
-h1 .settings:focus,
-h1 .settings:active {
+h1 .options:focus,
+h1 .options:active,
+h1 .clear:focus,
+h1 .clear:active {
     border-color: #4a91e2;
 }
 
@@ -44,8 +48,47 @@ h1 .settings:active {
     padding: 0.9rem 0;
     border-bottom: 1px dashed #888;
     font-size: 1rem;
+    display: flex;
 }
 
 .item:last-child {
     border: 0;
+}
+
+.item .text {
+    flex: 1;
+}
+
+.item .actions {
+    flex: 0;
+    min-width: 10rem;
+    text-align: right;
+}
+
+button {
+    background-color: #fafbfc;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    box-shadow: 0 1px 0 rgb(27 31 35 / 4%), inset 0 1px 0 rgb(255 255 255 / 25%);
+    border-radius: 5px;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    padding: 3px 12px;
+    white-space: nowrap;
+    user-select: none;
+}
+
+button:hover {
+    background-color: #f3f4f6;
+    transition-duration: 0.1s;
+}
+
+button:active {
+    background-color: #edeff2;
+    box-shadow: inset 0 1px 0 rgb(225 228 232 / 20%);
+    transition: none;
+}
+
+button:focus {
+    outline: 1px dotted transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgb(3 102 214 / 30%);
 }
