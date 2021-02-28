@@ -3,6 +3,8 @@ window.onload = function () {
     const clearButton = document.getElementById('clear');
     const optionsButton = document.getElementById('options');
     const notificationContainer = document.getElementById('notification');
+    let notiTimeout;
+    let focusTimeout;
 
     optionsButton.onclick = () => chrome.runtime.openOptionsPage();
     chrome.storage.sync.get(null, renderItems);
@@ -25,7 +27,7 @@ window.onload = function () {
 
                 navigator.clipboard.writeText(item).then(
                     () => {
-                        setNotification('Copied 👍', 2000);
+                        showNotification({ message: 'Copied 👍' });
                     },
                     (err) => {
                         console.error('ADOT: Could not copy text: ', err);
@@ -47,20 +49,21 @@ window.onload = function () {
         });
 
         clearButton.onclick = function () {
-            if (confirm('Are you sure you want to clear all items?')) {
-                chrome.storage.sync.set({ items: [] }, () => showNoItems());
-            }
+            showNotification({
+                message: 'Are you sure?',
+                type: 'danger',
+                timeout: 10000,
+                buttons: [
+                    { text: 'Yes', focused: true, onclick: () => clearAllItems() },
+                    { text: 'No', onclick: () => hideNotification() },
+                ],
+            });
         };
     }
 
-    function setNotification(message, timeout) {
-        notificationContainer.innerHTML = message;
-        notificationContainer.className = 'on';
-
-        window.setTimeout(() => {
-            notificationContainer.className = '';
-            notificationContainer.innerHTML = '';
-        }, timeout);
+    function clearAllItems() {
+        hideNotification();
+        chrome.storage.sync.set({ items: [] }, () => showNoItems());
     }
 
     function showNoItems() {
@@ -68,9 +71,49 @@ window.onload = function () {
         clearButton.style.display = 'none';
     }
 
+    function showNotification({ message, type, timeout, buttons }) {
+        if (!message) return;
+        notificationContainer.innerHTML = '';
+        notificationContainer.className = 'on';
+        let focusedButton;
+
+        if (type && type === 'danger') {
+            notificationContainer.classList.add('danger');
+        }
+
+        const messageContainer = createElement('div', '', [createText(message)]);
+        notificationContainer.append(messageContainer);
+
+        if (buttons) {
+            notificationContainer.classList.add('big');
+            const buttonContainer = createElement('div', '');
+
+            buttons.forEach((button) => {
+                buttonElement = createButton(button.className, button.title, button.text, button.onclick);
+                buttonContainer.append(buttonElement);
+                if (button.focused) {
+                    focusedButton = buttonElement;
+                }
+            });
+            notificationContainer.append(buttonContainer);
+        }
+
+        window.clearTimeout(focusTimeout);
+        window.setTimeout(() => focusedButton && focusedButton.focus(), 300);
+        window.clearTimeout(notiTimeout);
+        notiTimeout = window.setTimeout(() => hideNotification(), timeout || 2000);
+    }
+
+    function hideNotification() {
+        notificationContainer.className = '';
+        notificationContainer.innerHTML = '';
+    }
+
     function createButton(className, title, value, onClickHandler) {
         const button = createElement('button', className, [createText(value)]);
-        button.setAttribute('title', title);
+        if (title) {
+            button.setAttribute('title', title);
+        }
         button.onclick = onClickHandler;
         return button;
     }
@@ -81,7 +124,9 @@ window.onload = function () {
 
     function createElement(tagName, className, children) {
         const element = document.createElement(tagName);
-        element.className = className;
+        if (className) {
+            element.className = className;
+        }
         if (children) {
             element.append(...children);
         }

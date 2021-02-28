@@ -4,9 +4,14 @@
     background: #fff2a8;
 }
 
-body {
-    color: #333;
+body,
+button,
+input {
     font-family: 'Nunito', 'Consolas', 'Trebuchet MS', sans-serif;
+    color: #333;
+}
+
+body {
     padding-bottom: 3rem;
 }
 
@@ -66,7 +71,7 @@ h1 .clear:active {
     text-align: right;
 }
 
-button {
+.item .actions button {
     background-color: #fafbfc;
     border: 1px solid rgba(27, 31, 35, 0.15);
     box-shadow: 0 1px 0 rgb(27 31 35 / 4%), inset 0 1px 0 rgb(255 255 255 / 25%);
@@ -78,18 +83,18 @@ button {
     user-select: none;
 }
 
-button:hover {
+.item .actions button:hover {
     background-color: #f3f4f6;
     transition-duration: 0.1s;
 }
 
-button:active {
+.item .actions button:active {
     background-color: #edeff2;
     box-shadow: inset 0 1px 0 rgb(225 228 232 / 20%);
     transition: none;
 }
 
-button:focus {
+.item .actions button:focus {
     outline: 1px dotted transparent;
     outline-offset: 2px;
     box-shadow: 0 0 0 3px rgb(3 102 214 / 30%);
@@ -97,6 +102,9 @@ button:focus {
 
 #notification {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: -9rem;
     transition: all 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -107,10 +115,31 @@ button:focus {
     box-shadow: 0px 0px 3px rgb(0 0 0 / 20%);
     font-size: 1rem;
     font-weight: bold;
-    align-items: center;
-    justify-content: center;
+    user-select: none;
 }
 
 #notification.on {
     bottom: 0rem;
+}
+
+#notification.big {
+    height: 5rem;
+}
+
+#notification.danger {
+    background-color: #ffb7b7;
+    box-shadow: 0px 0px 3px rgb(255 183 183 / 20%);
+}
+
+#notification button {
+    background: transparent;
+    border: 0;
+    font-weight: bold;
+    font-size: 0.85rem;
+    padding: 0 1rem;
+    outline: none;
+}
+
+#notification button:focus {
+    text-decoration: underline;
 }
